@@ -11,4 +11,13 @@ class Question extends Model
         'content', 'id_test',
     ];
 
+    public function questionChoice()
+    {
+        return $this->hasMany('question_choice');
+    }
+
+    public function test()
+    {
+        return $this->belongsTo('App\Test');
+    }
 }
