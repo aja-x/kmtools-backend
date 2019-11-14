@@ -24,8 +24,6 @@ $router->get('/jwt-secret', function (){
 });
 $router->post('/api/auth/login', 'Auth\AuthController@login');
 $router->post('/register', 'Auth\AuthController@register');
-$router->get('/search[/{query}]', 'SearchDataController@result');
-
 
 $router->group(['middleware' => 'auth'], function() use ($router) {
         $router->get('/api/auth/user', 'UserController@user');
@@ -44,7 +42,9 @@ $router->group(['middleware' => 'auth'], function() use ($router) {
         $router->delete('/article/{id}', 'ArticleController@destroy');
         $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
 
+        $router->post('/search[/{query}]', 'SearchDataController@result');
 
+        $router->get('/category', 'InterestCategoryController@index');
         $router->post('/logout', 'Auth\AuthController@logout');
     }
 );
