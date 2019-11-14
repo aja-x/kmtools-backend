@@ -11,4 +11,8 @@ class TestCategory extends Model
         'name',
     ];
 
+    public function test($key)
+    {
+        return $this->hasMany('App\Test', 'id_article');
+    }
 }
