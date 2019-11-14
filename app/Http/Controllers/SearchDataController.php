@@ -10,7 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class TestController extends Controller
+class SearchDataController extends Controller
 {
     private $rules;
 
@@ -27,8 +27,9 @@ class TestController extends Controller
         $resultArticle=Article::where('title', 'LIKE', "%{$request->input('query')}%")->get();
         $resultUser=User::where('name', 'LIKE', "%{$request->input('query')}%")->get();
         $resultErrorReport=ErrorReport::where('title', 'LIKE', "%{$request->input('query')}%")->get();
-        return Response::plain(['article' => $resultArticle, 'user' => $resultUser,
-            'error_report' => $resultErrorReport]);
+        return Response::plain(['article' => ['count' => $resultArticle->count(), 'data' => $resultArticle],
+            'user' => ['count' => $resultUser->count(), 'data' => $resultUser],
+            'error_report' => ['count' => $resultErrorReport->count(), 'data' => $resultErrorReport]]);
 
     }
 }
