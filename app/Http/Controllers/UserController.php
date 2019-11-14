@@ -19,7 +19,7 @@ class UserController extends Controller
             'name' => 'required|string',
             'username' => 'required|string',
             'email' => 'required|email',
-            'id_interest_category' => 'required|number'
+            'id_interest_category' => 'required|integer'
         ];
     }
 
@@ -36,6 +36,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, $this->rules);
+
         $user = User::findOrFail($id)->update([
             'name' => $request->input('name'),
             'username' => $request->input('username'),
@@ -56,7 +57,7 @@ class UserController extends Controller
             Response::plain(['message' => 'Wrong password'], 400);
 
         $user->update([
-            'password' => $request->input('password'),
+            'password' => Hash::make($request->input('password')),
         ]);
         return Response::success($user);
     }
