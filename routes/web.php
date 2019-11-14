@@ -42,6 +42,9 @@ $router->group(['middleware' => 'auth'], function() use ($router) {
         $router->delete('/article/{id}', 'ArticleController@destroy');
         $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
 
+        $router->post('/search[/{query}]', 'SearchDataController@result');
+
+        $router->get('/category', 'InterestCategoryController@index');
         $router->post('/logout', 'Auth\AuthController@logout');
     }
 );
