@@ -33,6 +33,7 @@ $router->group(['middleware' => 'auth'], function() use ($router) {
     $router->put('user/{id}/password', 'UserController@updatePassword');
     $router->delete('user/{id}', 'UserController@destroy');
 
+    $router->get('/category', 'InterestCategoryController@index');
     $router->get('/article/category/{id}', 'ArticleController@filterCategory');
 
     $router->get('/article', 'ArticleController@index');
