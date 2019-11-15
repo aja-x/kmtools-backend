@@ -11,4 +11,14 @@ class TestHistory extends Model
         'score', 'completed_time', 'id_user', 'id_test',
     ];
 
+    public function test()
+    {
+        return $this->belongsTo('App\Test');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
 }
