@@ -33,6 +33,20 @@ class UserController extends Controller
         return Response::view(User::findOrFail($id));
     }
 
+    public function setInterestCategory(Request $request)
+    {
+        $this->validate($request, [
+            'id_interest_category' => 'required|integer'
+        ]);
+
+        $userKmAttribute = UserKmAttribute::create([
+            'id_interest_category' => $request->input('id_interest_category'),
+            'id_user' => Auth::id(),
+        ]);
+
+        return Response::success($userKmAttribute);
+    }
+
     public function update(Request $request, $id)
     {
         $this->validate($request, $this->rules);
