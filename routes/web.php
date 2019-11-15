@@ -24,12 +24,13 @@ $router->get('/jwt-secret', function (){
 });
 $router->post('/api/auth/login', 'Auth\AuthController@login');
 $router->post('/register', 'Auth\AuthController@register');
-$router->get('/troubleshoot/{id}', 'TroubleshootArticleController@filterCategory');
+$router->get('/troubleshoot/category/{id}', 'TroubleshootArticleController@filterCategory');
 
 $router->group(['middleware' => 'auth'], function() use ($router) {
     $router->get('/api/auth/user', 'UserController@user');
     $router->get('user/{id}', 'UserController@view');
     $router->put('user/{id}', 'UserController@update');
+    $router->post('user/category', 'UserController@setInterestCategory');
     $router->put('user/{id}/password', 'UserController@updatePassword');
     $router->delete('user/{id}', 'UserController@destroy');
 
