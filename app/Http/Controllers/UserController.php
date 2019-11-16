@@ -81,8 +81,8 @@ class UserController extends Controller
         return Response::success($user);
     }
 
-    public function destroy($id)
+    public function destroy()
     {
-        return Response::success(User::destroy($id), 204);
+        return Response::success(User::destroy(Auth::id()), 204);
     }
 }
