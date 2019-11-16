@@ -24,7 +24,6 @@ $router->get('/jwt-secret', function (){
 });
 $router->post('/api/auth/login', 'Auth\AuthController@login');
 $router->post('/register', 'Auth\AuthController@register');
-$router->get('/troubleshoot/category/{id}', 'TroubleshootArticleController@filterCategory');
 
 $router->group(['middleware' => 'auth'], function() use ($router) {
     $router->get('/api/auth/user', 'UserController@user');
@@ -35,15 +34,22 @@ $router->group(['middleware' => 'auth'], function() use ($router) {
     $router->delete('user/{id}', 'UserController@destroy');
 
     $router->get('/category', 'InterestCategoryController@index');
-    $router->get('/article/category/{id}', 'ArticleController@filterCategory');
 
     $router->get('/article', 'ArticleController@index');
     $router->get('/article/{id}', 'ArticleController@view');
+    $router->get('/article/category/{id}', 'ArticleController@filterCategory');
     $router->post('/article/save', 'ArticleController@save');
     $router->put('/article/{id}/save', 'ArticleController@save');
     $router->post('/article/publish', 'ArticleController@publish');
     $router->put('/article/{id}/publish', 'ArticleController@publish');
-    $router->delete('/article/{id}', 'ArticleController@destroy');
+
+    $router->get('/troubleshoot', 'TroubleshootArticleController@index');
+    $router->get('/troubleshoot/{id}', 'TroubleshootArticleController@view');
+    $router->get('/troubleshoot/{id}/category', 'TroubleshootArticleController@filterCategory');
+    $router->post('/troubleshoot/save', 'TroubleshootArticleController@save');
+    $router->put('/troubleshoot/{id}/save', 'TroubleshootArticleController@save');
+    $router->post('/troubleshoot/publish', 'TroubleshootArticleController@publish');
+    $router->put('/troubleshoot/{id}/publish', 'TroubleshootArticleController@publish');
 
     $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
 
