@@ -5,5 +5,3 @@ php:
   disabled:
     - length_ordered_imports
     - unused_use
-js: true
-css: true
