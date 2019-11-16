@@ -27,11 +27,11 @@ $router->post('/register', 'Auth\AuthController@register');
 
 $router->group(['middleware' => 'auth'], function() use ($router) {
     $router->get('/api/auth/user', 'UserController@user');
-    $router->get('user/{id}', 'UserController@view');
-    $router->put('user/{id}', 'UserController@update');
-    $router->post('user/category', 'UserController@setInterestCategory');
-    $router->put('user/{id}/password', 'UserController@updatePassword');
-    $router->delete('user/{id}', 'UserController@destroy');
+    $router->post('/auth/user/category', 'UserController@setInterestCategory');
+    $router->put('/auth/user/password', 'UserController@updatePassword');
+    $router->put('/user', 'UserController@update');
+    $router->get('/user/{id}', 'UserController@view');
+    $router->delete('/user/{id}', 'UserController@destroy');
 
     $router->get('/category', 'InterestCategoryController@index');
 
