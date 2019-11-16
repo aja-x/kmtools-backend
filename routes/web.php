@@ -29,9 +29,9 @@ $router->group(['middleware' => 'auth'], function() use ($router) {
     $router->get('/api/auth/user', 'UserController@user');
     $router->post('/auth/user/category', 'UserController@setInterestCategory');
     $router->put('/auth/user/password', 'UserController@updatePassword');
-    $router->put('/user', 'UserController@update');
+    $router->put('/auth/user', 'UserController@update');
+    $router->delete('/auth/user', 'UserController@destroy');
     $router->get('/user/{id}', 'UserController@view');
-    $router->delete('/user/{id}', 'UserController@destroy');
 
     $router->get('/category', 'InterestCategoryController@index');
 
