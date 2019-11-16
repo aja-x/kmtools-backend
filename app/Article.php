@@ -13,22 +13,22 @@ class Article extends Model
 
     public function test()
     {
-        return $this->hasMany('App\Test');
+        return $this->hasMany('App\Test', 'id_test');
     }
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'id_user');
     }
 
     public function interestCategory()
     {
-        return $this->belongsTo('App\InterestCategory');
+        return $this->belongsTo('App\InterestCategory', 'id_interest_category');
     }
 
     public function errorReport()
     {
-        return $this->belongsTo('App\ErrorReport');
+        return $this->belongsTo('App\ErrorReport', 'id_error_report');
     }
 
 }
