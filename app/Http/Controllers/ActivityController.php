@@ -6,7 +6,7 @@ use App\Article;
 use App\Services\Http\Response;
 use Illuminate\Http\Request;
 
-class ArticleController extends Controller
+class ActivityController extends Controller
 {
     private $rules;
 
