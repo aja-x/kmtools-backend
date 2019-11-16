@@ -30,7 +30,6 @@ $router->group(['middleware' => 'auth'], function() use ($router) {
         $router->get('user/{id}', 'UserController@view');
         $router->put('user/{id}', 'UserController@update');
         $router->put('user/{id}/password', 'UserController@updatePassword');
-        $router->delete('user/{id}', 'UserController@destroy');
 
         $router->get('/article', 'ArticleController@index');
         $router->get('/article/{id}', 'ArticleController@filterCategory');
