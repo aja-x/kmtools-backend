@@ -27,25 +27,24 @@ $router->post('/register', 'Auth\AuthController@register');
 $router->get('/troubleshoot/category/{id}', 'TroubleshootArticleController@filterCategory');
 
 $router->group(['middleware' => 'auth'], function() use ($router) {
-    $router->get('/api/auth/user', 'UserController@user');
-    $router->get('user/{id}', 'UserController@view');
-    $router->put('user/{id}', 'UserController@update');
-    $router->post('user/category', 'UserController@setInterestCategory');
-    $router->put('user/{id}/password', 'UserController@updatePassword');
-    $router->delete('user/{id}', 'UserController@destroy');
+        $router->get('/api/auth/user', 'UserController@user');
+        $router->get('user/{id}', 'UserController@view');
+        $router->put('user/{id}', 'UserController@update');
+        $router->put('user/{id}/password', 'UserController@updatePassword');
 
-    $router->get('/category', 'InterestCategoryController@index');
-    $router->get('/article/category/{id}', 'ArticleController@filterCategory');
+        $router->get('/article', 'ArticleController@index');
+        $router->get('/article/{id}', 'ArticleController@filterCategory');
+        $router->get('/article/{id}/view', 'ArticleController@view');
+        $router->post('/article/', 'ArticleController@save');
+        $router->put('/article/{id}', 'ArticleController@save');
+        $router->post('/article/', 'ArticleController@publish');
+        $router->put('/article/{id}', 'ArticleController@publish');
+        $router->delete('/article/{id}', 'ArticleController@destroy');
+        $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
 
-    $router->get('/article', 'ArticleController@index');
-    $router->get('/article/{id}', 'ArticleController@view');
-    $router->post('/article/save', 'ArticleController@save');
-    $router->put('/article/{id}/save', 'ArticleController@save');
-    $router->post('/article/publish', 'ArticleController@publish');
-    $router->put('/article/{id}/publish', 'ArticleController@publish');
-    $router->delete('/article/{id}', 'ArticleController@destroy');
-
-    $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
-
-    $router->post('/logout', 'Auth\AuthController@logout');
-});
+        $router->post('/search[/{query}]', 'SearchDataController@result');
+        $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
+        $router->get('/category', 'InterestCategoryController@index');
+        $router->post('/logout', 'Auth\AuthController@logout');
+    }
+);
