@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Services\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -15,7 +16,7 @@ class ArticleController extends Controller
         $this->rules = [
             'title' => 'required|string',
             'content' => 'required|string',
-            'id_interest_category' => 'required|integer'
+            'id_interest_category' => 'required|integer',
         ];
     }
 
@@ -43,6 +44,7 @@ class ArticleController extends Controller
                 'content' => $request->input('content'),
                 'last_edited' => date("Y-m-d H:i:s"),
                 'id_interest_category' => $request->input('id_interest_category'),
+                'id_user' => Auth::id(),
             ]);
         else
             $article = Article::findOrFail($id)->update([
@@ -50,6 +52,7 @@ class ArticleController extends Controller
                 'content' => $request->input('content'),
                 'last_edited' => date("Y-m-d H:i:s"),
                 'id_interest_category' => $request->input('id_interest_category'),
+                'id_user' => Auth::id(),
             ]);
         return Response::success($article, 201);
     }
@@ -64,6 +67,7 @@ class ArticleController extends Controller
                 'last_edited' => date("Y-m-d H:i:s"),
                 'published_date' => date("Y-m-d H:i:s"),
                 'id_interest_category' => $request->input('id_interest_category'),
+                'id_user' => Auth::id(),
             ]);
         else
             $article = Article::findOrFail($id)->update([
@@ -72,6 +76,7 @@ class ArticleController extends Controller
                 'last_edited' => date("Y-m-d H:i:s"),
                 'published_date' => date("Y-m-d H:i:s"),
                 'id_interest_category' => $request->input('id_interest_category'),
+                'id_user' => Auth::id(),
             ]);
         return Response::success($article);
     }
