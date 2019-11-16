@@ -22,7 +22,7 @@ class ArticleController extends Controller
 
     public function index()
     {
-        return Response::view(Article::all());
+        return Response::view(Article::whereNotNull('id_interest_category')->whereNotNull('published_date')->get());
     }
 
     public function view($id)
