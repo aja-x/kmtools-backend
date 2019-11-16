@@ -13,11 +13,11 @@ class Question extends Model
 
     public function questionChoice()
     {
-        return $this->hasMany('question_choice');
+        return $this->hasMany('question_choice', 'id_question');
     }
 
     public function test()
     {
-        return $this->belongsTo('App\Test');
+        return $this->belongsTo('App\Test', 'id_test');
     }
 }

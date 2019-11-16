@@ -13,12 +13,12 @@ class TestHistory extends Model
 
     public function test()
     {
-        return $this->belongsTo('App\Test');
+        return $this->belongsTo('App\Test', 'id_test');
     }
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'id_user');
     }
 
 }

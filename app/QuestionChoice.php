@@ -11,8 +11,8 @@ class QuestionChoice extends Model
         'content', 'is_correct', 'id_question',
     ];
 
-    public function questionChoice()
+    public function question()
     {
-        return $this->belongsTo('App\Question');
+        return $this->belongsTo('App\Question', 'id_question');
     }
 }

@@ -13,7 +13,7 @@ class Article extends Model
 
     public function test()
     {
-        return $this->hasMany('App\Test', 'id_test');
+        return $this->hasMany('App\Test', 'id_article');
     }
 
     public function user()
