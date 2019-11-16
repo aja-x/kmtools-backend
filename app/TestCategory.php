@@ -13,6 +13,6 @@ class TestCategory extends Model
 
     public function test($key)
     {
-        return $this->hasMany('App\Test', 'id_article');
+        return $this->hasMany('App\Test', 'id_test_category');
     }
 }

@@ -8,6 +8,7 @@ use App\UserKmAttribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -17,9 +18,13 @@ class UserController extends Controller
     {
         $this->rules = [
             'name' => 'required|string',
-            'username' => 'required|string',
-            'email' => 'required|email',
-            'id_interest_category' => 'required|integer'
+            'username' => ['required', 'string',
+                Rule::unique('users', 'username')->ignore(Auth::id()),
+            ],
+            'email' => ['required', 'email',
+                Rule::unique('users', 'email')->ignore(Auth::id()),
+            ],
+            'id_interest_category' => 'required|exists:interest_categories,id'
         ];
     }
 
@@ -47,19 +52,19 @@ class UserController extends Controller
         return Response::success($userKmAttribute);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $this->validate($request, $this->rules);
-
-        $user = User::findOrFail($id)->update([
+        $user = User::with('userKmAttribute')->findOrFail(Auth::id());
+        $user->update([
             'name' => $request->input('name'),
             'username' => $request->input('username'),
             'email' => $request->input('email'),
         ]);
-        $userKmAttibute = UserKmAttribute::where('id_user', $id)->update([
+        $user->userKmAttribute->update([
             'id_interest_category' => $request->input('id_interest_category'),
         ]);
-        return Response::success($user && $userKmAttibute);
+        return Response::success($user);
     }
 
     public function updatePassword(Request $request, $id)
@@ -76,8 +81,8 @@ class UserController extends Controller
         return Response::success($user);
     }
 
-    public function destroy($id)
+    public function destroy()
     {
-        return Response::success(User::destroy($id), 204);
+        return Response::success(User::destroy(Auth::id()), 204);
     }
 }

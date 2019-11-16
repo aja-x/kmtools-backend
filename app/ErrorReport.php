@@ -18,12 +18,12 @@ class ErrorReport extends Model
 
     public function interestCategory()
     {
-        return $this->belongsTo('App\InterestCategory');
+        return $this->belongsTo('App\InterestCategory', 'id_interest_category');
     }
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'id_user');
     }
 
 }

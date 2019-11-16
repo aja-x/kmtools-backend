@@ -24,27 +24,36 @@ $router->get('/jwt-secret', function (){
 });
 $router->post('/api/auth/login', 'Auth\AuthController@login');
 $router->post('/register', 'Auth\AuthController@register');
-$router->get('/troubleshoot/category/{id}', 'TroubleshootArticleController@filterCategory');
 
 $router->group(['middleware' => 'auth'], function() use ($router) {
-        $router->get('/api/auth/user', 'UserController@user');
-        $router->get('user/{id}', 'UserController@view');
-        $router->put('user/{id}', 'UserController@update');
-        $router->put('user/{id}/password', 'UserController@updatePassword');
+    $router->get('/api/auth/user', 'UserController@user');
+    $router->post('/auth/user/category', 'UserController@setInterestCategory');
+    $router->put('/auth/user/password', 'UserController@updatePassword');
+    $router->put('/auth/user', 'UserController@update');
+    $router->delete('/auth/user', 'UserController@destroy');
+    $router->get('/user/{id}', 'UserController@view');
 
-        $router->get('/article', 'ArticleController@index');
-        $router->get('/article/{id}', 'ArticleController@filterCategory');
-        $router->get('/article/{id}/view', 'ArticleController@view');
-        $router->post('/article/', 'ArticleController@save');
-        $router->put('/article/{id}', 'ArticleController@save');
-        $router->post('/article/', 'ArticleController@publish');
-        $router->put('/article/{id}', 'ArticleController@publish');
-        $router->delete('/article/{id}', 'ArticleController@destroy');
-        $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
+    $router->get('/category', 'InterestCategoryController@index');
 
-        $router->post('/search[/{query}]', 'SearchDataController@result');
-        $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
-        $router->get('/category', 'InterestCategoryController@index');
-        $router->post('/logout', 'Auth\AuthController@logout');
-    }
-);
+    $router->get('/article', 'ArticleController@index');
+    $router->get('/article/{id}', 'ArticleController@view');
+    $router->get('/article/category/{id}', 'ArticleController@filterCategory');
+    $router->post('/article/save', 'ArticleController@save');
+    $router->put('/article/{id}/save', 'ArticleController@save');
+    $router->post('/article/publish', 'ArticleController@publish');
+    $router->put('/article/{id}/publish', 'ArticleController@publish');
+
+    $router->get('/troubleshoot', 'TroubleshootArticleController@index');
+    $router->get('/troubleshoot/{id}', 'TroubleshootArticleController@view');
+    $router->get('/troubleshoot/{id}/category', 'TroubleshootArticleController@filterCategory');
+    $router->post('/troubleshoot/save', 'TroubleshootArticleController@save');
+    $router->put('/troubleshoot/{id}/save', 'TroubleshootArticleController@save');
+    $router->post('/troubleshoot/publish', 'TroubleshootArticleController@publish');
+    $router->put('/troubleshoot/{id}/publish', 'TroubleshootArticleController@publish');
+    
+    $router->post('/search[/{query}]', 'SearchDataController@result');
+
+    $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
+
+    $router->post('/logout', 'Auth\AuthController@logout');
+});

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\ErrorReport;
 use App\Services\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ArticleController extends Controller
+class TroubleshootArticleController extends Controller
 {
     private $rules;
 
@@ -16,23 +17,45 @@ class ArticleController extends Controller
         $this->rules = [
             'title' => 'required|string',
             'content' => 'required|string',
-            'id_interest_category' => 'required|integer',
+            'id_error_report' => 'required|exists:error_reports,id'
         ];
     }
 
     public function index()
     {
-        return Response::view(Article::whereNotNull('id_interest_category')->whereNotNull('published_date')->get());
+        return Response::view(Article::whereNotNull('id_error_report')->whereNotNull('published_date')->get());
     }
 
     public function view($id)
     {
-        return Response::view(Article::findOrFail($id));
+        return Response::view(Article::with('errorReport')->findOrFail($id));
     }
 
-    public function filterCategory($idInterestCategory)
+    public function getErrorReport($id)
     {
-        return Response::view(Article::where('id_interest_category', $idInterestCategory)->get());
+        $troubleshoot = Article::findOrFail($id);
+        if ($troubleshoot->id_error_report === null)
+            return Response::plain(['message' => 'Bad request'], 400);
+        else
+            return Response::view($troubleshoot->errorReport);
+    }
+
+    public function filterCategory($id)
+    {
+        $article = Article::findOrFail($id);
+        if ($article->id_error_report === null)
+            return Response::plain(['message' => 'Bad request'], 400);
+        else
+        {
+            $errorReport = ErrorReport::where('id_error_report', $article->errorReport->id_error_report)
+                ->get();
+            $troubleshoot = [];
+            foreach ($errorReport as $item)
+            {
+                $troubleshoot[] = $item->article;
+            }
+            return Response::success($troubleshoot);
+        }
     }
 
     public function save(Request $request, $id = null)
@@ -43,7 +66,7 @@ class ArticleController extends Controller
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
                 'last_edited' => date("Y-m-d H:i:s"),
-                'id_interest_category' => $request->input('id_interest_category'),
+                'id_error_report' => $request->input('id_error_report'),
                 'id_user' => Auth::id(),
             ]);
         else
@@ -51,7 +74,7 @@ class ArticleController extends Controller
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
                 'last_edited' => date("Y-m-d H:i:s"),
-                'id_interest_category' => $request->input('id_interest_category'),
+                'id_error_report' => $request->input('id_error_report'),
                 'id_user' => Auth::id(),
             ]);
         return Response::success($article, 201);
@@ -66,7 +89,7 @@ class ArticleController extends Controller
                 'content' => $request->input('content'),
                 'last_edited' => date("Y-m-d H:i:s"),
                 'published_date' => date("Y-m-d H:i:s"),
-                'id_interest_category' => $request->input('id_interest_category'),
+                'id_error_report' => $request->input('id_error_report'),
                 'id_user' => Auth::id(),
             ]);
         else
@@ -75,15 +98,10 @@ class ArticleController extends Controller
                 'content' => $request->input('content'),
                 'last_edited' => date("Y-m-d H:i:s"),
                 'published_date' => date("Y-m-d H:i:s"),
-                'id_interest_category' => $request->input('id_interest_category'),
+                'id_error_report' => $request->input('id_error_report'),
                 'id_user' => Auth::id(),
             ]);
         return Response::success($article);
-    }
-
-    public function destroy($id)
-    {
-        return Response::success(Article::destroy($id), 204);
     }
 
 }

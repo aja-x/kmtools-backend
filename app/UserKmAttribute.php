@@ -13,7 +13,7 @@ class UserKmAttribute extends Model
 
     public function userKmAttribute()
     {
-        return $this->belongsTo('App\UserKmAttribute');
+        return $this->belongsTo('App\User', 'id_user');
     }
 
 }

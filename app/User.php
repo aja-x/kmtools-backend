@@ -33,22 +33,22 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function userKmAttribute()
     {
-        return $this->hasOne('App\UserKmAttribute');
+        return $this->hasOne('App\UserKmAttribute', 'id_user');
     }
 
     public function article()
     {
-        return $this->hasOne('App\Article');
+        return $this->hasMany('App\Article', 'id_user');
     }
 
     public function errorReport()
     {
-        return $this->hasOne('App\ErrorReport');
+        return $this->hasMany('App\ErrorReport', 'id_user');
     }
 
     public function testHistory()
     {
-        return $this->hasOne('App\TestHistory');
+        return $this->hasMany('App\TestHistory', 'id_user');
     }
 
 }
