@@ -24,7 +24,7 @@ class UserController extends Controller
             'email' => ['required', 'email',
                 Rule::unique('users', 'email')->ignore(Auth::id()),
             ],
-            'id_interest_category' => 'required|exists:interest_categories,id'
+            'id_interest_category' => 'required|exists:interest_categories,id',
         ];
     }
 
@@ -41,7 +41,7 @@ class UserController extends Controller
     public function setInterestCategory(Request $request)
     {
         $this->validate($request, [
-            'id_interest_category' => 'required|integer'
+            'id_interest_category' => 'required|integer',
         ]);
 
         $userKmAttribute = UserKmAttribute::create([
@@ -64,6 +64,7 @@ class UserController extends Controller
         $user->userKmAttribute->update([
             'id_interest_category' => $request->input('id_interest_category'),
         ]);
+
         return Response::success($user);
     }
 
@@ -72,12 +73,14 @@ class UserController extends Controller
         $this->validate($request, ['password' => 'required']);
 
         $user = User::findOrFail($id);
-        if (!(Hash::check($request->input('password'), $user->password)))
+        if (! (Hash::check($request->input('password'), $user->password))) {
             Response::plain(['message' => 'Wrong password'], 400);
+        }
 
         $user->update([
             'password' => Hash::make($request->input('password')),
         ]);
+
         return Response::success($user);
     }
 

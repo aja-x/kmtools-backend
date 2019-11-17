@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-
     protected $fillable = [
         'content', 'id_article', 'id_user',
     ];
@@ -20,5 +19,4 @@ class Comment extends Model
     {
         return $this->belongsTo('App\User', 'id_user');
     }
-
 }
