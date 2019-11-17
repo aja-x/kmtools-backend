@@ -29,6 +29,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Article::class, function (Faker\Generator $faker) {
     $id_interest = InterestCategory::all()->pluck('id')->toArray();
     $id_user = User::all()->pluck('id')->toArray();
+
     return [
         'title' => $faker->sentence,
         'content' => $faker->paragraph,
@@ -42,6 +43,7 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
 $factory->define(App\UserKmAttribute::class, function (Faker\Generator $faker) {
     $id_user = User::all()->pluck('id')->toArray();
     $id_interest = InterestCategory::all()->pluck('id')->toArray();
+
     return [
         'id_user' => $faker->unique()->randomElement($id_user),
         'id_interest_category' => $faker->randomElement($id_interest),
@@ -50,6 +52,7 @@ $factory->define(App\UserKmAttribute::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Question::class, function (Faker\Generator $faker) {
     $id_test = Test::all()->pluck('id')->toArray();
+
     return [
         'content' => $faker->sentence(10),
         'id_test' => $faker->randomElement($id_test),
@@ -58,6 +61,7 @@ $factory->define(App\Question::class, function (Faker\Generator $faker) {
 
 $factory->define(App\QuestionChoice::class, function (Faker\Generator $faker) {
     $id_question = Question::all()->pluck('id')->toArray();
+
     return [
         'content' => $faker->sentence(),
         'is_correct' => $faker->boolean(25),
@@ -68,6 +72,7 @@ $factory->define(App\QuestionChoice::class, function (Faker\Generator $faker) {
 $factory->define(App\TestHistory::class, function (Faker\Generator $faker) {
     $id_user = User::all()->pluck('id')->toArray();
     $id_test = Test::all()->pluck('id')->toArray();
+
     return [
         'score' => $faker->numberBetween(0, 100),
         'completed_time' => $faker->dateTime(),
@@ -79,6 +84,7 @@ $factory->define(App\TestHistory::class, function (Faker\Generator $faker) {
 $factory->define(App\ErrorReport::class, function (Faker\Generator $faker) {
     $id_user = User::all()->pluck('id')->toArray();
     $id_interest_category = Test::all()->pluck('id')->toArray();
+
     return [
         'title' => $faker->numberBetween(0, 100),
         'content' => $faker->dateTime(),

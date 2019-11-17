@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\ErrorReport;
 use App\InterestCategory;
 use App\Services\Http\Response;
-use App\ErrorReport;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -34,14 +34,11 @@ class ErrorReportController extends Controller
 
     public function store(Request $request)
     {
-        try
-        {
+        try {
             $this->validate($request, $this->rules);
             $user = User::findOrFail($request->input('id_user'));
             $interestCategory = InterestCategory::findOrFail($request->input('id_interest_category'));
-        }
-        catch (\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             return Response::plain(['message' => 'Error, bad request'], 400);
         }
         $errorReport = ErrorReport::create([
@@ -50,19 +47,17 @@ class ErrorReportController extends Controller
             'id_user' => $request->input('id_user'),
             'id_interest_category' => $request->input('id_interest_category'),
         ]);
+
         return Response::success($errorReport, 201);
     }
 
     public function update(Request $request, $id)
     {
-        try
-        {
+        try {
             $this->validate($request, $this->rules);
             $user = User::findOrFail($request->input('id_user'));
             $interestCategory = InterestCategory::findOrFail($request->input('id_interest_category'));
-        }
-        catch (\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             return Response::plain(['message' => 'Error, bad request'], 400);
         }
         $errorReport = ErrorReport::findOrFail($id)->update([
@@ -71,6 +66,7 @@ class ErrorReportController extends Controller
             'id_user' => $request->input('id_user'),
             'id_interest_category' => $request->input('id_interest_category'),
         ]);
+
         return Response::success($errorReport, 201);
     }
 
