@@ -75,3 +75,15 @@ $factory->define(App\TestHistory::class, function (Faker\Generator $faker) {
         'id_test' => $faker->randomElement($id_test),
     ];
 });
+
+$factory->define(App\ErrorReport::class, function (Faker\Generator $faker) {
+    $id_user = User::all()->pluck('id')->toArray();
+    $id_interest_category = Test::all()->pluck('id')->toArray();
+    return [
+        'title' => $faker->numberBetween(0, 100),
+        'content' => $faker->dateTime(),
+        'last_updated' => $faker->dateTime(),
+        'id_user' => $faker->randomElement($id_user),
+        'id_interest_category' => $faker->randomElement($id_interest_category),
+    ];
+});
