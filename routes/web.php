@@ -16,16 +16,16 @@ use Illuminate\Support\Str;
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-$router->get('/app-key', function (){
+$router->get('/app-key', function () {
     return Str::random(32);
 });
-$router->get('/jwt-secret', function (){
+$router->get('/jwt-secret', function () {
     return 'PuXzdUhLho9FmhLPoGgJVzdGuKtS8cgPFYanIjgmZEvvc0yJFUbqWXdZBNyS2R1P';
 });
 $router->post('/api/auth/login', 'Auth\AuthController@login');
 $router->post('/register', 'Auth\AuthController@register');
 
-$router->group(['middleware' => 'auth'], function() use ($router) {
+$router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('/api/auth/user', 'UserController@user');
     $router->post('/auth/user/category', 'UserController@setInterestCategory');
     $router->put('/auth/user/password', 'UserController@updatePassword');

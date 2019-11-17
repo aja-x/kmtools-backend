@@ -23,6 +23,7 @@ class CommentController extends Controller
     public function getArticleComments($id)
     {
         $article = Article::findOrFail($id);
+
         return Response::view($article->comment);
     }
 
@@ -34,6 +35,7 @@ class CommentController extends Controller
             'id_user' => Auth::id(),
             'id_article' => $request->input('id_article'),
         ]);
+
         return Response::success($comment, 201);
     }
 
@@ -45,6 +47,7 @@ class CommentController extends Controller
             'id_user' => Auth::id(),
             'id_article' => $request->input('id_article'),
         ]);
+
         return Response::success($comment);
     }
 
@@ -52,5 +55,4 @@ class CommentController extends Controller
     {
         return Response::success(Comment::findOrFail($id)->destroy(), 204);
     }
-
 }

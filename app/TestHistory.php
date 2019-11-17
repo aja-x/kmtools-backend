@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class TestHistory extends Model
 {
-
     protected $fillable = [
         'score', 'completed_time', 'id_user', 'id_test',
     ];
@@ -20,5 +19,4 @@ class TestHistory extends Model
     {
         return $this->belongsTo('App\User', 'id_user');
     }
-
 }

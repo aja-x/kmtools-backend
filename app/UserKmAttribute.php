@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserKmAttribute extends Model
 {
-
     protected $fillable = [
         'id_user', 'id_interest_category',
     ];
@@ -15,5 +14,4 @@ class UserKmAttribute extends Model
     {
         return $this->belongsTo('App\User', 'id_user');
     }
-
 }
