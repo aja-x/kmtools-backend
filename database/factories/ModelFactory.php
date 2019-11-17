@@ -28,7 +28,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Article::class, function (Faker\Generator $faker) {
     $id_interest = InterestCategory::all()->pluck('id')->toArray();
-    $id_user = InterestCategory::all()->pluck('id')->toArray();
+    $id_user = User::all()->pluck('id')->toArray();
     return [
         'title' => $faker->sentence,
         'content' => $faker->paragraph,
