@@ -51,6 +51,11 @@ $router->group(['middleware' => 'auth'], function() use ($router) {
     $router->post('/troubleshoot/publish', 'TroubleshootArticleController@publish');
     $router->put('/troubleshoot/{id}/publish', 'TroubleshootArticleController@publish');
 
+    $router->get('/article/{id}/comments', 'CommentController@getArticleComments');
+    $router->post('/comment', 'CommentController@store');
+    $router->put('/comment/{id}', 'CommentController@update');
+    $router->delete('/comment/{id}', 'CommentController@destroy');
+
     $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
 
     $router->post('/logout', 'Auth\AuthController@logout');
