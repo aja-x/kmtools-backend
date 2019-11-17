@@ -1,7 +1,15 @@
-php:
-  preset: laravel
-  enabled:
-    - alpha_ordered_imports
-  disabled:
-    - length_ordered_imports
-    - unused_use
+preset: laravel
+
+enabled:
+  - alpha_ordered_imports
+
+disabled:
+  - length_ordered_imports
+  - unused_use
+
+finder:
+  exclude:
+    - "tests"
+    - "node_modules"
+    - "storage"
+    - "vendor"
