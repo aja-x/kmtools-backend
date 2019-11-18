@@ -25,6 +25,7 @@ class AuthController extends Controller
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
         ]);
+
         return Response::success($user, 201);
     }
 
@@ -48,6 +49,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
+
         return Response::plain(['message' => 'Logout success']);
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class InterestCategory extends Model
 {
-
     protected $fillable = [
         'name',
     ];
@@ -25,5 +24,4 @@ class InterestCategory extends Model
     {
         return $this->hasMany('App\ErrorReport', 'id_interest_category');
     }
-
 }

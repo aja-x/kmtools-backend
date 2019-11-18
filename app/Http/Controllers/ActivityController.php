@@ -15,7 +15,7 @@ class ActivityController extends Controller
         $this->rules = [
             'title' => 'required|string',
             'content' => 'required|string',
-            'id_interest_category' => 'required|integer'
+            'id_interest_category' => 'required|integer',
         ];
     }
 
@@ -37,42 +37,46 @@ class ActivityController extends Controller
     public function save(Request $request, $id = null)
     {
         $this->validate($request, $this->rules);
-        if ($id === null)
+        if ($id === null) {
             $article = Article::create([
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
-                'last_edited' => date("Y-m-d H:i:s"),
+                'last_edited' => date('Y-m-d H:i:s'),
                 'id_interest_category' => $request->input('id_interest_category'),
             ]);
-        else
+        } else {
             $article = Article::findOrFail($id)->update([
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
-                'last_edited' => date("Y-m-d H:i:s"),
+                'last_edited' => date('Y-m-d H:i:s'),
                 'id_interest_category' => $request->input('id_interest_category'),
             ]);
+        }
+
         return Response::success($article, 201);
     }
 
     public function publish(Request $request, $id = null)
     {
         $this->validate($request, $this->rules);
-        if ($id === null)
+        if ($id === null) {
             $article = Article::create([
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
-                'last_edited' => date("Y-m-d H:i:s"),
-                'published_date' => date("Y-m-d H:i:s"),
+                'last_edited' => date('Y-m-d H:i:s'),
+                'published_date' => date('Y-m-d H:i:s'),
                 'id_interest_category' => $request->input('id_interest_category'),
             ]);
-        else
+        } else {
             $article = Article::findOrFail($id)->update([
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
-                'last_edited' => date("Y-m-d H:i:s"),
-                'published_date' => date("Y-m-d H:i:s"),
+                'last_edited' => date('Y-m-d H:i:s'),
+                'published_date' => date('Y-m-d H:i:s'),
                 'id_interest_category' => $request->input('id_interest_category'),
             ]);
+        }
+
         return Response::success($article);
     }
 
@@ -80,5 +84,4 @@ class ActivityController extends Controller
     {
         return Response::success(Article::destroy($id), 204);
     }
-
 }

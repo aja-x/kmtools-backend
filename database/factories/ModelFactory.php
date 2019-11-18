@@ -11,6 +11,7 @@
 |
 */
 
+use App\Article;
 use App\InterestCategory;
 use App\Question;
 use App\Test;
@@ -26,26 +27,24 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\InterestCategory::class, function (Faker\Generator $faker) {
-    return [
-        'name' => $faker->jobTitle,
-    ];
-});
-
 $factory->define(App\Article::class, function (Faker\Generator $faker) {
     $id_interest = InterestCategory::all()->pluck('id')->toArray();
+    $id_user = User::all()->pluck('id')->toArray();
+
     return [
-        'title' => $faker->sentence,
-        'content' => $faker->paragraph,
-        'last_edited' => $faker->dateTime,
-        'published_date' => $faker->dateTime,
+        'title' => $faker->sentence(),
+        'content' => $faker->paragraph(),
+        'last_edited' => $faker->dateTime(),
+        'published_date' => $faker->dateTime(),
         'id_interest_category' => $faker->randomElement($id_interest),
+        'id_user' => $faker->randomElement($id_user),
     ];
 });
 
 $factory->define(App\UserKmAttribute::class, function (Faker\Generator $faker) {
     $id_user = User::all()->pluck('id')->toArray();
     $id_interest = InterestCategory::all()->pluck('id')->toArray();
+
     return [
         'id_user' => $faker->unique()->randomElement($id_user),
         'id_interest_category' => $faker->randomElement($id_interest),
@@ -54,6 +53,7 @@ $factory->define(App\UserKmAttribute::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Question::class, function (Faker\Generator $faker) {
     $id_test = Test::all()->pluck('id')->toArray();
+
     return [
         'content' => $faker->sentence(10),
         'id_test' => $faker->randomElement($id_test),
@@ -62,6 +62,7 @@ $factory->define(App\Question::class, function (Faker\Generator $faker) {
 
 $factory->define(App\QuestionChoice::class, function (Faker\Generator $faker) {
     $id_question = Question::all()->pluck('id')->toArray();
+
     return [
         'content' => $faker->sentence(),
         'is_correct' => $faker->boolean(25),
@@ -72,10 +73,35 @@ $factory->define(App\QuestionChoice::class, function (Faker\Generator $faker) {
 $factory->define(App\TestHistory::class, function (Faker\Generator $faker) {
     $id_user = User::all()->pluck('id')->toArray();
     $id_test = Test::all()->pluck('id')->toArray();
+
     return [
         'score' => $faker->numberBetween(0, 100),
         'completed_time' => $faker->dateTime(),
         'id_user' => $faker->randomElement($id_user),
         'id_test' => $faker->randomElement($id_test),
+    ];
+});
+
+$factory->define(App\ErrorReport::class, function (Faker\Generator $faker) {
+    $id_user = User::all()->pluck('id')->toArray();
+    $id_interest_category = InterestCategory::all()->pluck('id')->toArray();
+
+    return [
+        'title' => $faker->sentence(),
+        'content' => $faker->sentence(),
+        'last_updated' => $faker->dateTime(),
+        'id_user' => $faker->randomElement($id_user),
+        'id_interest_category' => $faker->randomElement($id_interest_category),
+    ];
+});
+
+$factory->define(App\Comment::class, function (Faker\Generator $faker) {
+    $id_user = User::all()->pluck('id')->toArray();
+    $id_article = Article::all()->pluck('id')->toArray();
+
+    return [
+        'content' => $faker->sentence(),
+        'id_user' => $faker->randomElement($id_user),
+        'id_article' => $faker->randomElement($id_article),
     ];
 });
