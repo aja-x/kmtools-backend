@@ -19,8 +19,7 @@ class ArticlesTableSeeder extends Seeder
         $faker = Faker::create();
         $id_error_report = ErrorReport::all()->pluck('id')->toArray();
         $id_user = User::all()->pluck('id')->toArray();
-        for ($i = 0; $i < 10; $i++)
-        {
+        for ($i = 0; $i < 10; $i++) {
             Article::create([
                 'title' => $faker->sentence(),
                 'content' => $faker->paragraph(),
