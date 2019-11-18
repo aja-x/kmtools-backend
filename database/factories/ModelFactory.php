@@ -11,6 +11,7 @@
 |
 */
 
+use App\Article;
 use App\InterestCategory;
 use App\Question;
 use App\Test;
@@ -86,10 +87,21 @@ $factory->define(App\ErrorReport::class, function (Faker\Generator $faker) {
     $id_interest_category = Test::all()->pluck('id')->toArray();
 
     return [
-        'title' => $faker->numberBetween(0, 100),
-        'content' => $faker->dateTime(),
+        'title' => $faker->sentence(),
+        'content' => $faker->sentence(),
         'last_updated' => $faker->dateTime(),
         'id_user' => $faker->randomElement($id_user),
         'id_interest_category' => $faker->randomElement($id_interest_category),
+    ];
+});
+
+$factory->define(App\Comment::class, function (Faker\Generator $faker) {
+    $id_user = User::all()->pluck('id')->toArray();
+    $id_article = Article::all()->pluck('id')->toArray();
+
+    return [
+        'content' => $faker->sentence(),
+        'id_user' => $faker->randomElement($id_user),
+        'id_article' => $faker->randomElement($id_article),
     ];
 });
