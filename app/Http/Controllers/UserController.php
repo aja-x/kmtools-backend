@@ -68,11 +68,11 @@ class UserController extends Controller
         return Response::success($user);
     }
 
-    public function updatePassword(Request $request, $id)
+    public function updatePassword(Request $request)
     {
         $this->validate($request, ['password' => 'required']);
 
-        $user = User::findOrFail($id);
+        $user = User::findOrFail(Auth::id());
         if (! (Hash::check($request->input('password'), $user->password))) {
             Response::plain(['message' => 'Wrong password'], 400);
         }
