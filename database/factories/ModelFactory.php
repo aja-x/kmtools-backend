@@ -32,10 +32,10 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
     $id_user = User::all()->pluck('id')->toArray();
 
     return [
-        'title' => $faker->sentence,
-        'content' => $faker->paragraph,
-        'last_edited' => $faker->dateTime,
-        'published_date' => $faker->dateTime,
+        'title' => $faker->sentence(),
+        'content' => $faker->paragraph(),
+        'last_edited' => $faker->dateTime(),
+        'published_date' => $faker->dateTime(),
         'id_interest_category' => $faker->randomElement($id_interest),
         'id_user' => $faker->randomElement($id_user),
     ];
@@ -84,7 +84,7 @@ $factory->define(App\TestHistory::class, function (Faker\Generator $faker) {
 
 $factory->define(App\ErrorReport::class, function (Faker\Generator $faker) {
     $id_user = User::all()->pluck('id')->toArray();
-    $id_interest_category = Test::all()->pluck('id')->toArray();
+    $id_interest_category = InterestCategory::all()->pluck('id')->toArray();
 
     return [
         'title' => $faker->sentence(),
