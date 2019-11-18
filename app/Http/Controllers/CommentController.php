@@ -53,6 +53,6 @@ class CommentController extends Controller
 
     public function destroy($id)
     {
-        return Response::success(Comment::findOrFail($id)->destroy(), 204);
+        return Response::success(Comment::findOrFail($id)->delete(), 204);
     }
 }
