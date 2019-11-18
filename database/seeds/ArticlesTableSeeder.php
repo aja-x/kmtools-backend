@@ -2,8 +2,8 @@
 
 use App\Article;
 use App\ErrorReport;
-use Faker\Factory as Faker;
 use App\User;
+use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
 class ArticlesTableSeeder extends Seeder
