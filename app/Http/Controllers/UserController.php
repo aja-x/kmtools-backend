@@ -30,12 +30,24 @@ class UserController extends Controller
 
     public function user()
     {
-        return Response::plain(['user' => Auth::user()], 201);
+        $user = User::with(['userkmAttribute' => function ($query) {
+            $query->with('interestCategory');
+        }])->findOrFail(Auth::id());
+
+        return Response::view(['user' => $user]);
+    }
+
+    public function getUserRole()
+    {
+        $user = User::findOrFail(Auth::id());
+        $role = $user->userKmAttribute->interestCategory;
+
+        return Response::view($role);
     }
 
     public function view($id)
     {
-        return Response::view(User::findOrFail($id));
+        return Response::view(User::with('userKmAttribute')->findOrFail($id));
     }
 
     public function setInterestCategory(Request $request)

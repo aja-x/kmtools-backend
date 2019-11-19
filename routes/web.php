@@ -27,6 +27,7 @@ $router->post('/register', 'Auth\AuthController@register');
 
 $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('/api/auth/user', 'UserController@user');
+    $router->get('/auth/user/category', 'UserController@getUserRole');
     $router->post('/auth/user/category', 'UserController@setInterestCategory');
     $router->put('/auth/user/password', 'UserController@updatePassword');
     $router->put('/auth/user', 'UserController@update');
