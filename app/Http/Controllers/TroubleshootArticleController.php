@@ -30,7 +30,7 @@ class TroubleshootArticleController extends Controller
     public function view($id)
     {
         $article = Article::with('errorReport')->findOrFail($id);
-        if (!(new ActivityService())->updateFieldArticle($id)) {
+        if (! (new ActivityService())->updateFieldArticle($id)) {
             return Response::plain(['message' => 'Bad request'], 400);
         }
 
