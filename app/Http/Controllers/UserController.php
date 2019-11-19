@@ -33,6 +33,7 @@ class UserController extends Controller
         $user = User::with(['userkmAttribute' => function ($query) {
             $query->with('interestCategory');
         }])->findOrFail(Auth::id());
+
         return Response::view(['user' => $user]);
     }
 
@@ -40,6 +41,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail(Auth::id());
         $role = $user->userKmAttribute->interestCategory;
+
         return Response::view($role);
     }
 
