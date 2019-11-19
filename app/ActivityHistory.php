@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ActivityHistory extends Model
 {
     protected $fillable = [
-        'id_user', 'id_article', 'id_error_report', 'last_accessed'
+        'id_user', 'id_article', 'id_error_report', 'last_accessed',
     ];
 
     public function article()
