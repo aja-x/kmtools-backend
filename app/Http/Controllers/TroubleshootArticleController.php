@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\ErrorReport;
+use App\Services\ActivityService;
 use App\Services\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,12 @@ class TroubleshootArticleController extends Controller
 
     public function view($id)
     {
-        return Response::view(Article::with('errorReport')->findOrFail($id));
+        $article = Article::with('errorReport')->findOrFail($id);
+        if (!(new ActivityService())->updateFieldArticle($id)) {
+            return Response::plain(['message' => 'Bad request'], 400);
+        }
+
+        return Response::view($article);
     }
 
     public function getErrorReport($id)
