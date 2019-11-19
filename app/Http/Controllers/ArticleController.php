@@ -29,7 +29,7 @@ class ArticleController extends Controller
     public function view($id)
     {
         $article = Article::findOrFail($id);
-        if (!(new ActivityService())->updateFieldArticle($id)) {
+        if (! (new ActivityService())->updateFieldArticle($id)) {
             return Response::plain(['message' => 'Bad request'], 400);
         }
 
