@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Services\ActivityService;
 use App\Services\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,12 @@ class ArticleController extends Controller
 
     public function view($id)
     {
-        return Response::view(Article::findOrFail($id));
+        $article = Article::findOrFail($id);
+        if (!(new ActivityService())->updateFieldArticle($id)) {
+            return Response::plain(['message' => 'Bad request'], 400);
+        }
+
+        return Response::view($article);
     }
 
     public function filterCategory($idInterestCategory)
