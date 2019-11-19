@@ -16,8 +16,8 @@ class CreateActivityHistoriesTable extends Migration
         Schema::create('activity_histories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('id_user')->unsigned()->index();
-            $table->bigInteger('id_article')->unsigned()->index();
-            $table->bigInteger('id_error_report')->unsigned()->index();
+            $table->bigInteger('id_article')->unsigned()->nullable()->index();
+            $table->bigInteger('id_error_report')->unsigned()->nullable()->index();
             $table->timestamp('last_accessed');
             $table->foreign('id_user')->references('id')
                 ->on('users')->onUpdate('cascade')->onDelete('cascade');
