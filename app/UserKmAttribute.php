@@ -14,4 +14,9 @@ class UserKmAttribute extends Model
     {
         return $this->belongsTo('App\User', 'id_user');
     }
+
+    public function interestCategory()
+    {
+        return $this->belongsTo('App\InterestCategory', 'id_interest_category');
+    }
 }
