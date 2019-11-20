@@ -20,6 +20,11 @@ class Article extends Model
         return $this->hasMany('App\Test', 'id_article');
     }
 
+    public function activityHistory()
+    {
+        return $this->hasMany('App\ActivityHistory', 'id_article');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User', 'id_user');

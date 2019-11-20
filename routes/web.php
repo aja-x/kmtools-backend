@@ -59,6 +59,11 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->put('/comment/{id}', 'CommentController@update');
     $router->delete('/comment/{id}', 'CommentController@destroy');
 
+    $router->get('/user/activity/article', 'ActivityHistoryController@getArticleActivity');
+    $router->get('/user/{id}/activity/article', 'ActivityHistoryController@getArticleActivity');
+    $router->get('/user/activity/error-report', 'ActivityHistoryController@getErrorReportActivity');
+    $router->get('/user/{id}/activity/error-report', 'ActivityHistoryController@getErrorReportActivity');
+
     $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
 
     $router->post('/logout', 'Auth\AuthController@logout');

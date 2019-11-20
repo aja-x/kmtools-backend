@@ -15,6 +15,11 @@ class ErrorReport extends Model
         return $this->hasMany('App\Article', 'id_error_report');
     }
 
+    public function activityHistory()
+    {
+        return $this->hasMany('App\ActivityHistory', 'id_error_report');
+    }
+
     public function interestCategory()
     {
         return $this->belongsTo('App\InterestCategory', 'id_interest_category');
