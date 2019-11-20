@@ -38,7 +38,7 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
 
     $router->get('/article', 'ArticleController@index');
     $router->get('/article/{id}', 'ArticleController@view');
-    $router->get('/article/category/{id}', 'ArticleController@filterCategory');
+    $router->get('/article/recommendation', 'ArticleController@recommendation');
     $router->post('/article/save', 'ArticleController@save');
     $router->put('/article/{id}/save', 'ArticleController@save');
     $router->post('/article/publish', 'ArticleController@publish');
