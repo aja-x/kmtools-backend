@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\InterestCategory;
 use App\Services\Http\Response;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,9 +32,11 @@ class ArticleController extends Controller
         return Response::view(Article::findOrFail($id));
     }
 
-    public function filterCategory($idInterestCategory)
+    public function recommendation()
     {
-        return Response::view(Article::where('id_interest_category', $idInterestCategory)->get());
+        $user = User::findOrFail(Auth::id());
+
+        return Response::view($user->UserKmAttribute->interestCategory->article);
     }
 
     public function save(Request $request, $id = null)
