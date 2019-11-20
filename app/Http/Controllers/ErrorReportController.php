@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ErrorReport;
 use App\InterestCategory;
+use App\Services\ActivityService;
 use App\Services\Http\Response;
 use App\User;
 use Illuminate\Http\Request;
@@ -29,7 +30,12 @@ class ErrorReportController extends Controller
 
     public function view($id)
     {
-        return Response::view(ErrorReport::findOrFail($id));
+        $errorReport = ErrorReport::findOrFail($id);
+        if (! (new ActivityService())->updateFieldErrorReport($id)) {
+            return Response::plain(['message' => 'Bad request'], 400);
+        }
+
+        return Response::view($errorReport);
     }
 
     public function store(Request $request)

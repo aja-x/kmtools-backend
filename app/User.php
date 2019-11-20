@@ -41,6 +41,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasMany('App\Article', 'id_user');
     }
 
+    public function activityHistory()
+    {
+        return $this->hasMany('App\ActivityHistory', 'id_user');
+    }
+
     public function errorReport()
     {
         return $this->hasMany('App\ErrorReport', 'id_user');
