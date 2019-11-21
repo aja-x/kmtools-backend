@@ -25,7 +25,9 @@ class ArticleController extends Controller
 
     public function index()
     {
-        return Response::view(Article::whereNotNull('id_interest_category')->whereNotNull('published_date')->get());
+        $article = Article::whereNotNull('id_interest_category')->whereNotNull('published_date')->paginate(6);
+
+        return Response::view($article);
     }
 
     public function view($id)
