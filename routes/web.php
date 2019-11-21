@@ -44,6 +44,12 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->post('/article/publish', 'ArticleController@publish');
     $router->put('/article/{id}/publish', 'ArticleController@publish');
 
+    $router->get('/error-report', 'ErrorReportController@index');
+    $router->get('/error-report/{id}', 'ErrorReportController@view');
+    $router->post('/error-report', 'ErrorReportController@store');
+    $router->put('/error-report/{id}', 'ErrorReportController@update');
+    $router->delete('/error-report/{id}', 'ErrorReportController@destroy');
+
     $router->get('/troubleshoot', 'TroubleshootArticleController@index');
     $router->get('/troubleshoot/{id}', 'TroubleshootArticleController@view');
     $router->get('/troubleshoot/{id}/category', 'TroubleshootArticleController@filterCategory');
