@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\ErrorReport;
-use App\InterestCategory;
 use App\Services\ActivityService;
 use App\Services\Http\Response;
-use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ErrorReportController extends Controller
 {
@@ -18,14 +17,13 @@ class ErrorReportController extends Controller
         $this->rules = [
             'title' => 'required|string',
             'content' => 'required|string',
-            'id_user' => 'required|number',
-            'id_interest_category' => 'required|number',
+            'id_interest_category' => 'required|integer|exists:interest_categories,id',
         ];
     }
 
     public function index()
     {
-        $errorReport = ErrorReport::all()->paginate(5);
+        $errorReport = ErrorReport::paginate(5);
 
         return Response::view($errorReport);
     }
@@ -42,18 +40,13 @@ class ErrorReportController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            $this->validate($request, $this->rules);
-            $user = User::findOrFail($request->input('id_user'));
-            $interestCategory = InterestCategory::findOrFail($request->input('id_interest_category'));
-        } catch (\Exception $exception) {
-            return Response::plain(['message' => 'Error, bad request'], 400);
-        }
+        $this->validate($request, $this->rules);
         $errorReport = ErrorReport::create([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
-            'id_user' => $request->input('id_user'),
+            'id_user' => Auth::id(),
             'id_interest_category' => $request->input('id_interest_category'),
+            'last_updated' => date('Y-m-d H:i:s'),
         ]);
 
         return Response::success($errorReport, 201);
@@ -61,18 +54,17 @@ class ErrorReportController extends Controller
 
     public function update(Request $request, $id)
     {
-        try {
-            $this->validate($request, $this->rules);
-            $user = User::findOrFail($request->input('id_user'));
-            $interestCategory = InterestCategory::findOrFail($request->input('id_interest_category'));
-        } catch (\Exception $exception) {
-            return Response::plain(['message' => 'Error, bad request'], 400);
+        $this->validate($request, $this->rules);
+        if (! $errorReport = ErrorReport::where('id_user', Auth::id())->findOrFail($id)) {
+            return Response::plain("Validation failed", 400);
         }
-        $errorReport = ErrorReport::findOrFail($id)->update([
+
+        $errorReport->update([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
-            'id_user' => $request->input('id_user'),
+            'id_user' => Auth::id(),
             'id_interest_category' => $request->input('id_interest_category'),
+            'last_updated' => date('Y-m-d H:i:s'),
         ]);
 
         return Response::success($errorReport, 201);
@@ -80,6 +72,10 @@ class ErrorReportController extends Controller
 
     public function destroy($id)
     {
-        return Response::success(ErrorReport::destroy($id), 204);
+        if (! $errorReport = ErrorReport::where('id_user', Auth::id())->findOrFail($id)) {
+            return Response::plain("Validation failed", 400);
+        }
+
+        return Response::success($errorReport->delete(), 204);
     }
 }
