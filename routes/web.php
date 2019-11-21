@@ -37,8 +37,8 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('/category', 'InterestCategoryController@index');
 
     $router->get('/article', 'ArticleController@index');
-    $router->get('/article/{id}', 'ArticleController@view');
     $router->get('/article/recommendation', 'ArticleController@recommendation');
+    $router->get('/article/{id}', 'ArticleController@view');
     $router->post('/article/save', 'ArticleController@save');
     $router->put('/article/{id}/save', 'ArticleController@save');
     $router->post('/article/publish', 'ArticleController@publish');
@@ -51,8 +51,8 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->delete('/error-report/{id}', 'ErrorReportController@destroy');
 
     $router->get('/troubleshoot', 'TroubleshootArticleController@index');
-    $router->get('/troubleshoot/{id}', 'TroubleshootArticleController@view');
     $router->get('/troubleshoot/{id}/category', 'TroubleshootArticleController@filterCategory');
+    $router->get('/troubleshoot/{id}', 'TroubleshootArticleController@view');
     $router->post('/troubleshoot/save', 'TroubleshootArticleController@save');
     $router->put('/troubleshoot/{id}/save', 'TroubleshootArticleController@save');
     $router->post('/troubleshoot/publish', 'TroubleshootArticleController@publish');
@@ -66,8 +66,8 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->delete('/comment/{id}', 'CommentController@destroy');
 
     $router->get('/user/activity/article', 'ActivityHistoryController@getArticleActivity');
-    $router->get('/user/{id}/activity/article', 'ActivityHistoryController@getArticleActivity');
     $router->get('/user/activity/error-report', 'ActivityHistoryController@getErrorReportActivity');
+    $router->get('/user/{id}/activity/article', 'ActivityHistoryController@getArticleActivity');
     $router->get('/user/{id}/activity/error-report', 'ActivityHistoryController@getErrorReportActivity');
 
     $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
