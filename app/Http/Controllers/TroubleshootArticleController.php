@@ -54,16 +54,12 @@ class TroubleshootArticleController extends Controller
         $article = Article::findOrFail($id);
         if ($article->id_error_report === null) {
             return Response::plain(['message' => 'Bad request'], 400);
-        } else {
-            $errorReport = ErrorReport::where('id_error_report', $article->errorReport->id_error_report)
-                ->get();
-            $troubleshoot = [];
-            foreach ($errorReport as $item) {
-                $troubleshoot[] = $item->article;
-            }
-
-            return Response::success($troubleshoot);
         }
+
+        $errorReport = ErrorReport::with('article')
+            ->where('id_interest_category', $article->errorReport->id_interest_category)->get();
+
+        return Response::success($errorReport);
     }
 
     public function save(Request $request, $id = null)
