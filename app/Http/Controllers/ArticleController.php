@@ -44,7 +44,7 @@ class ArticleController extends Controller
     {
         $user = User::findOrFail(Auth::id());
 
-        return Response::view($user->UserKmAttribute->interestCategory->article);
+        return Response::view($user->UserKmAttribute->interestCategory->article()->paginate(6));
     }
 
     public function save(Request $request, $id = null)
