@@ -56,7 +56,7 @@ class ErrorReportController extends Controller
     {
         $this->validate($request, $this->rules);
         if (! $errorReport = ErrorReport::where('id_user', Auth::id())->findOrFail($id)) {
-            return Response::plain("Validation failed", 400);
+            return Response::plain('Validation failed', 400);
         }
 
         $errorReport->update([
@@ -73,7 +73,7 @@ class ErrorReportController extends Controller
     public function destroy($id)
     {
         if (! $errorReport = ErrorReport::where('id_user', Auth::id())->findOrFail($id)) {
-            return Response::plain("Validation failed", 400);
+            return Response::plain('Validation failed', 400);
         }
 
         return Response::success($errorReport->delete(), 204);
