@@ -25,7 +25,9 @@ class ErrorReportController extends Controller
 
     public function index()
     {
-        return Response::view(ErrorReport::all());
+        $errorReport = ErrorReport::all()->paginate(5);
+
+        return Response::view($errorReport);
     }
 
     public function view($id)
