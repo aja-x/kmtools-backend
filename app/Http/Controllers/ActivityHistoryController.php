@@ -15,11 +15,13 @@ class ActivityHistoryController extends Controller
             $user = User::with(['activityHistory' => function ($query) {
                 $query->whereNotNull('id_article')->with('article');
             }])->findOrFail(Auth::id());
+
             return Response::view($user);
         } else {
             $user = User::with(['activityHistory' => function ($query) {
                 $query->whereNotNull('id_article')->with('article');
             }])->findOrFail($id);
+
             return Response::view($user);
         }
     }
@@ -30,11 +32,13 @@ class ActivityHistoryController extends Controller
             $user = User::with(['activityHistory' => function ($query) {
                 $query->whereNotNull('id_error_report')->with('errorReport');
             }])->findOrFail(Auth::id());
+
             return Response::view($user);
         } else {
             $user = User::with(['activityHistory' => function ($query) {
                 $query->whereNotNull('id_error_report')->with('errorReport');
             }])->findOrFail($id);
+
             return Response::view($user);
         }
     }

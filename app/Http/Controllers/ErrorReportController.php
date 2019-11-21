@@ -31,7 +31,7 @@ class ErrorReportController extends Controller
     public function view($id)
     {
         $errorReport = ErrorReport::findOrFail($id);
-        if (!(new ActivityService())->updateFieldErrorReport($id)) {
+        if (! (new ActivityService())->updateFieldErrorReport($id)) {
             return Response::plain(['message' => 'Bad request'], 400);
         }
 
