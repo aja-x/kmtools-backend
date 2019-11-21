@@ -24,7 +24,9 @@ class TroubleshootArticleController extends Controller
 
     public function index()
     {
-        return Response::view(Article::whereNotNull('id_error_report')->whereNotNull('published_date')->get());
+        $troubleshoot = Article::whereNotNull('id_error_report')->whereNotNull('published_date')->paginate(5);
+
+        return Response::view($troubleshoot);
     }
 
     public function view($id)
