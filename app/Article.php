@@ -39,4 +39,10 @@ class Article extends Model
     {
         return $this->belongsTo('App\ErrorReport', 'id_error_report');
     }
+
+    public function image()
+    {
+        return $this->belongsToMany('App\Image', 'article_images',
+            'id_article', 'id_image')->as('articleImages')->withTimestamps();
+    }
 }
