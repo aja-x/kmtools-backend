@@ -29,4 +29,11 @@ class ErrorReport extends Model
     {
         return $this->belongsTo('App\User', 'id_user');
     }
+
+    public function image()
+    {
+        return $this->belongsToMany('App\Image', 'error_report_images',
+            'id_error_report', 'id_image')
+            ->as('errorReportImages')->withTimestamps();
+    }
 }
