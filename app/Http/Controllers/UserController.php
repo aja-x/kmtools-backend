@@ -30,9 +30,9 @@ class UserController extends Controller
 
     public function user()
     {
-        $user = User::findOrFail(Auth::id())->makeHidden('userKmAttribute');
+        $user = User::findOrFail(Auth::id())->makeHidden('userKmattribute');
 
-        return Response::plain(['user' => $user, 'role' => $user->userKmattribute->interestCategory]);
+        return Response::plain(['user' => $user, 'interest_category' => $user->userKmattribute->interestCategory]);
     }
 
     public function getUserRole()
