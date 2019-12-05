@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Article;
-use App\InterestCategory;
+use App\ErrorReport;
 use App\Services\ActivityService;
 use App\Services\Http\Response;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ArticleController extends Controller
+class TroubleshootArticleController extends Controller
 {
     private $rules;
 
@@ -19,21 +18,20 @@ class ArticleController extends Controller
         $this->rules = [
             'title' => 'required|string',
             'content' => 'required|string',
-            'id_interest_category' => 'required|integer',
+            'id_error_report' => 'required|exists:error_reports,id',
         ];
     }
 
     public function index()
     {
-        $article = Article::whereNotNull('id_interest_category')->whereNotNull('published_date')
-            ->orderBy('id', 'desc')->paginate(6);
+        $troubleshoot = Article::whereNotNull('id_error_report')->whereNotNull('published_date')->paginate(5);
 
-        return Response::view($article);
+        return Response::view($troubleshoot);
     }
 
     public function view($id)
     {
-        $article = Article::findOrFail($id);
+        $article = Article::with('errorReport')->findOrFail($id);
         if (! (new ActivityService())->updateFieldArticle($id)) {
             return Response::plain(['message' => 'Bad request'], 400);
         }
@@ -41,11 +39,27 @@ class ArticleController extends Controller
         return Response::view($article);
     }
 
-    public function recommendation()
+    public function getErrorReport($id)
     {
-        $user = User::findOrFail(Auth::id());
+        $troubleshoot = Article::findOrFail($id);
+        if ($troubleshoot->id_error_report === null) {
+            return Response::plain(['message' => 'Bad request'], 400);
+        } else {
+            return Response::view($troubleshoot->errorReport);
+        }
+    }
 
-        return Response::view($user->UserKmAttribute->interestCategory->article()->paginate(6));
+    public function filterCategory($id)
+    {
+        $article = Article::findOrFail($id);
+        if ($article->id_error_report === null) {
+            return Response::plain(['message' => 'Bad request'], 400);
+        }
+
+        $errorReport = ErrorReport::with('article')
+            ->where('id_interest_category', $article->errorReport->id_interest_category)->get();
+
+        return Response::success($errorReport);
     }
 
     public function save(Request $request, $id = null)
@@ -56,7 +70,7 @@ class ArticleController extends Controller
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
                 'last_edited' => date('Y-m-d H:i:s'),
-                'id_interest_category' => $request->input('id_interest_category'),
+                'id_error_report' => $request->input('id_error_report'),
                 'id_user' => Auth::id(),
             ]);
         } else {
@@ -64,7 +78,7 @@ class ArticleController extends Controller
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
                 'last_edited' => date('Y-m-d H:i:s'),
-                'id_interest_category' => $request->input('id_interest_category'),
+                'id_error_report' => $request->input('id_error_report'),
                 'id_user' => Auth::id(),
             ]);
         }
@@ -81,7 +95,7 @@ class ArticleController extends Controller
                 'content' => $request->input('content'),
                 'last_edited' => date('Y-m-d H:i:s'),
                 'published_date' => date('Y-m-d H:i:s'),
-                'id_interest_category' => $request->input('id_interest_category'),
+                'id_error_report' => $request->input('id_error_report'),
                 'id_user' => Auth::id(),
             ]);
         } else {
@@ -90,16 +104,11 @@ class ArticleController extends Controller
                 'content' => $request->input('content'),
                 'last_edited' => date('Y-m-d H:i:s'),
                 'published_date' => date('Y-m-d H:i:s'),
-                'id_interest_category' => $request->input('id_interest_category'),
+                'id_error_report' => $request->input('id_error_report'),
                 'id_user' => Auth::id(),
             ]);
         }
 
         return Response::success($article);
-    }
-
-    public function destroy($id)
-    {
-        return Response::success(Article::destroy($id), 204);
     }
 }

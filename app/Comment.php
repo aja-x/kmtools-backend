@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TestHistory extends Model
+class Comment extends Model
 {
     protected $fillable = [
-        'score', 'completed_time', 'id_user', 'id_test',
+        'content', 'id_article', 'id_user',
     ];
 
-    public function test()
+    public function article()
     {
-        return $this->belongsTo('App\Test', 'id_test');
+        return $this->belongsTo('App\Article', 'id_article');
     }
 
     public function user()

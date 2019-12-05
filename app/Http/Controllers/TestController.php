@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Test;
 use App\Services\Http\Response;
+use App\Test;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -30,33 +30,33 @@ class TestController extends Controller
             ->join('question_choices', 'questions.id', '=', 'question_choices.id_question')
             ->where('tests.id', $id)
             ->get();
+
         return Response::returnResponse('data', $test, 200);
     }
 
     public function view($id)
     {
         $test = Test::findOrFail($id);
+
         return Response::returnResponse('data', $test, 200);
     }
 
     public function filterCategory($id_test_category)
     {
         $test = Test::where('id_test_category', $id_test_category)->get();
+
         return Response::returnResponse('data', $test, 200);
     }
 
     public function store(Request $request)
     {
-        try
-        {
+        try {
             $this->validate($request, [
                 'duration' => 'required|date_format:H:i:s',
                 'id_article' => 'required|integer',
                 'id_test_category' => 'required|integer',
             ]);
-        }
-        catch (ValidationException $e)
-        {
+        } catch (ValidationException $e) {
             return Response::returnResponse('error', $e, 400);
         }
         $test = Test::create([
@@ -64,24 +64,22 @@ class TestController extends Controller
             'id_article' => $request->input('id_article'),
             'id_test_category' => $request->input('id_test_category'),
         ]);
-        if (!$test)
+        if (! $test) {
             return Response::returnResponse('error', 'Store error', 400);
-        else
+        } else {
             return Response::returnResponse('Object created', $test, 201);
+        }
     }
 
     public function update(Request $request, $id)
     {
-        try
-        {
+        try {
             $this->validate($request, [
                 'duration' => 'required|date_format:H:i:s',
                 'id_article' => 'required|integer',
                 'id_test_category' => 'required|integer',
             ]);
-        }
-        catch (ValidationException $e)
-        {
+        } catch (ValidationException $e) {
             return Response::returnResponse('error', $e, 400);
         }
         $test = Test::findOrFail($id)->update([
@@ -89,17 +87,19 @@ class TestController extends Controller
             'id_article' => $request->input('id_article'),
             'id_test_category' => $request->input('id_test_category'),
         ]);
-        if (!$test)
+        if (! $test) {
             return Response::returnResponse('error', 'Update error', 400);
-        else
+        } else {
             return Response::returnResponse('Object updated', $test, 200);
+        }
     }
 
     public function destroy($id)
     {
-        if (!Test::destroy($id))
+        if (! Test::destroy($id)) {
             return Response::returnResponse('error', 'Destroy error', 400);
-        else
+        } else {
             return Response::returnResponse('Object destroyed', '', 204);
+        }
     }
 }

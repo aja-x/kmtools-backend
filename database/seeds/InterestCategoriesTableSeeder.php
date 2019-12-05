@@ -1,5 +1,6 @@
 <?php
 
+use App\InterestCategory;
 use Illuminate\Database\Seeder;
 
 class InterestCategoriesTableSeeder extends Seeder
@@ -11,6 +12,14 @@ class InterestCategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\InterestCategory::class, 10)->create();
+        InterestCategory::create([
+            'name' => 'Frontend',
+        ]);
+        InterestCategory::create([
+            'name' => 'Backend',
+        ]);
+        InterestCategory::create([
+            'name' => 'UI/UX',
+        ]);
     }
 }

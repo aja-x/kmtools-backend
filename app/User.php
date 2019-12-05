@@ -13,20 +13,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name', 'username', 'email', 'password',
     ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
     ];
@@ -39,5 +29,35 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function userKmAttribute()
+    {
+        return $this->hasOne('App\UserKmAttribute', 'id_user');
+    }
+
+    public function article()
+    {
+        return $this->hasMany('App\Article', 'id_user');
+    }
+
+    public function activityHistory()
+    {
+        return $this->hasMany('App\ActivityHistory', 'id_user');
+    }
+
+    public function errorReport()
+    {
+        return $this->hasMany('App\ErrorReport', 'id_user');
+    }
+
+    public function testHistory()
+    {
+        return $this->hasMany('App\TestHistory', 'id_user');
+    }
+
+    public function comment()
+    {
+        return $this->hasMany('App\Comment', 'id_user');
     }
 }

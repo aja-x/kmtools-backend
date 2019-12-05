@@ -26,6 +26,7 @@ class ThisControllerIsForTestingOnlyController extends Controller
             ->join('questions', 'tests.id', '=', 'questions.id_test')
             ->join('question_choices', 'questions.id', '=', 'question_choices.id_question')
             ->get();
+
         return Response::plain(['data' => $test], 200);
     }
 }

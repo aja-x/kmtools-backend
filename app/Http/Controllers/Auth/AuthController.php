@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -15,8 +16,12 @@ class AuthController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string',
-            'username' => 'required|string',
-            'email' => 'required|email',
+            'username' => ['required', 'string',
+                Rule::unique('users', 'username'),
+            ],
+            'email' => ['required', 'email',
+                Rule::unique('users', 'email'),
+            ],
             'password' => 'required',
         ]);
         $user = User::create([
@@ -25,12 +30,12 @@ class AuthController extends Controller
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
         ]);
-        return Response::success($user, 201);
+
+        return $this->login($request);
     }
 
     public function login(Request $request)
     {
-        //validate incoming request
         $this->validate($request, [
             'email' => 'required|string',
             'password' => 'required|string',
@@ -48,6 +53,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
+
         return Response::plain(['message' => 'Logout success']);
     }
 }
