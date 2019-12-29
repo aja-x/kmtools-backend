@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wissen-backend-deployment
+  labels:
+    app: wissen-backend
+spec:
+  replicas: 3
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: wissen-backend
+  template:
+    metadata:
+      labels:
+        app: wissen-backend
+    spec:
+      containers:
+        - name: wissen-backend
+          image: ajaxsoften/wissen-backend:$COMMIT_SHA1
+          ports:
+            - containerPort: 80
+          env:
+            - name: APP_NAME
+              value: "wissen-backend"
+            - name: APP_ENV
+              value: "production"
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: wissen-backend-secrets
+                  key: APP_KEY
+            - name: APP_DEBUG
+              value: "true"
+            - name: APP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: wissen-backend-secrets
+                  key: APP_URL
+            - name: APP_TIMEZONE
+              value: "Asia/Jakarta"
+
+            - name: LOG_CHANNEL
+              valueFrom:
+                secretKeyRef:
+                  name: wissen-backend-secrets
+                  key: LOG_CHANNEL
+
+            - name: DB_CONNECTION
+              value: "mysql"
+            - name: DB_HOST
+              value: "mysql"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-database
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-password
+
+            - name: CACHE_DRIVER
+              valueFrom:
+                secretKeyRef:
+                  name: wissen-backend-secrets
+                  key: CACHE_DRIVER
+            - name: QUEUE_CONNECTION
+              valueFrom:
+                secretKeyRef:
+                  name: wissen-backend-secrets
+                  key: QUEUE_CONNECTION
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: wissen-backend-secrets
+                  key: JWT_SECRET
