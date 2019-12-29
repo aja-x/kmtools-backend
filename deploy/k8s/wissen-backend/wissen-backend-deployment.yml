@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: wissen-backend
-          image: ajaxsoften/wissen-backend:$COMMIT_SHA1
+          image: ajaxsoften/wissen-backend
           ports:
             - containerPort: 80
           env:
