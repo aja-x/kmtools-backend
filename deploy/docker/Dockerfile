@@ -1,9 +1,9 @@
 FROM composer as composer
 
 WORKDIR /var/www/html/
-COPY ../../composer.json composer.lock /var/www/html/
+COPY composer.json composer.lock /var/www/html/
 RUN composer install --prefer-dist --no-scripts --no-dev --no-autoloader && rm -rf /root/.composer
-COPY ../.. /var/www/html/
+COPY . /var/www/html/
 RUN composer dump-autoload --no-scripts --no-dev --optimize
 
 
@@ -19,11 +19,11 @@ RUN docker-php-ext-install -j$(nproc) gd
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY ../.. /var/www/html/
+COPY . /var/www/html/
 COPY --from=composer /var/www/html/ /var/www/html/
 
-COPY vhost.conf /etc/apache2/sites-available/000-default.conf
-COPY start.sh /usr/local/bin/start
+COPY deploy/docker/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY deploy/docker/start.sh /usr/local/bin/start
 
 RUN chown -R www-data:www-data /var/www/html/ \
     && chmod u+x /usr/local/bin/start \
