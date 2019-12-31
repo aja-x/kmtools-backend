@@ -25,20 +25,4 @@ class ActivityHistoryController extends Controller
         }
     }
 
-    public function getErrorReportActivity($id = null)
-    {
-        if ($id === null) {
-            $user = User::with(['activityHistory' => function ($query) {
-                $query->whereNotNull('id_error_report')->with('errorReport');
-            }])->findOrFail(Auth::id());
-
-            return Response::view($user);
-        } else {
-            $user = User::with(['activityHistory' => function ($query) {
-                $query->whereNotNull('id_error_report')->with('errorReport');
-            }])->findOrFail($id);
-
-            return Response::view($user);
-        }
-    }
 }
