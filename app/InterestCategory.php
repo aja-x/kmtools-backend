@@ -20,8 +20,4 @@ class InterestCategory extends Model
         return $this->hasMany('App\Article', 'id_interest_category');
     }
 
-    public function errorReport()
-    {
-        return $this->hasMany('App\ErrorReport', 'id_interest_category');
-    }
 }
