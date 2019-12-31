@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Deploy Code
           command: |
-            . scripts/ci-deploy.sh
+            . deploy/scripts/ci-deploy.sh
 workflows:
   version: 2
   build-master:
