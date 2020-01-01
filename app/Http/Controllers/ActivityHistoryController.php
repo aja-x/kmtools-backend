@@ -24,5 +24,4 @@ class ActivityHistoryController extends Controller
             return Response::view($user);
         }
     }
-
 }
