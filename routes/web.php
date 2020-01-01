@@ -12,7 +12,7 @@
 */
 
 $router->get('/', function () use ($router) {
-    return "Wissen Backend API.";
+    return 'Wissen Backend API.';
 });
 $router->post('/api/auth/login', 'Auth\AuthController@login');
 $router->post('/register', 'Auth\AuthController@register');
