@@ -11,16 +11,8 @@
 |
 */
 
-use Illuminate\Support\Str;
-
 $router->get('/', function () use ($router) {
-    return $router->app->version();
-});
-$router->get('/app-key', function () {
-    return Str::random(32);
-});
-$router->get('/jwt-secret', function () {
-    return 'PuXzdUhLho9FmhLPoGgJVzdGuKtS8cgPFYanIjgmZEvvc0yJFUbqWXdZBNyS2R1P';
+    return "Wissen Backend API.";
 });
 $router->post('/api/auth/login', 'Auth\AuthController@login');
 $router->post('/register', 'Auth\AuthController@register');
