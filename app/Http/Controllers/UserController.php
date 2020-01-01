@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\InterestCategory;
 use App\Services\Http\Response;
 use App\User;
 use App\UserKmAttribute;
@@ -97,5 +98,10 @@ class UserController extends Controller
     public function destroy()
     {
         return Response::success(User::destroy(Auth::id()), 204);
+    }
+
+    public function getInterestCategories()
+    {
+        return Response::view(InterestCategory::all());
     }
 }

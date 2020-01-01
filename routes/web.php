@@ -34,7 +34,7 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->delete('/auth/user', 'UserController@destroy');
     $router->get('/user/{id}', 'UserController@view');
 
-    $router->get('/category', 'InterestCategoryController@index');
+    $router->get('/category', 'UserController@getInterestCategories');
 
     $router->get('/article', 'ArticleController@index');
     $router->get('/article/recommendation', 'ArticleController@recommendation');
@@ -69,8 +69,6 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('/user/activity/error-report', 'ActivityHistoryController@getErrorReportActivity');
     $router->get('/user/{id}/activity/article', 'ActivityHistoryController@getArticleActivity');
     $router->get('/user/{id}/activity/error-report', 'ActivityHistoryController@getErrorReportActivity');
-
-    $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
 
     $router->post('/logout', 'Auth\AuthController@logout');
 });
