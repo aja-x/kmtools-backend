@@ -26,6 +26,6 @@ class SearchDataController extends Controller
         $resultUser = User::where('name', 'LIKE', "%{$request->input('query')}%")->get();
 
         return Response::plain(['article' => ['count' => $resultArticle->count(), 'data' => $resultArticle],
-            'user' => ['count' => $resultUser->count(), 'data' => $resultUser],]);
+            'user' => ['count' => $resultUser->count(), 'data' => $resultUser], ]);
     }
 }
