@@ -4,19 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInterestCategoriesTable extends Migration
+class CreateImagesTable extends Migration
 {
     public function up()
     {
-        Schema::create('interest_categories', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('url');
             $table->string('name');
+            $table->string('type');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('interest_categories');
+        Schema::dropIfExists('images');
     }
 }
