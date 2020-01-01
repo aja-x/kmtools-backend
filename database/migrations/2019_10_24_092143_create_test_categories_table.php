@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateTestCategoriesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('test_categories', function (Blueprint $table) {
@@ -20,11 +15,6 @@ class CreateTestCategoriesTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('test_categories');
