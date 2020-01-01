@@ -44,6 +44,20 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->post('/article/publish', 'ArticleController@publishNewArticle');
     $router->put('/article/{id}/publish', 'ArticleController@publishExistingArticle');
 
+    $router->get('/error-report', 'ErrorReportController@index');
+    $router->get('/error-report/{id}', 'ErrorReportController@view');
+    $router->post('/error-report', 'ErrorReportController@store');
+    $router->put('/error-report/{id}', 'ErrorReportController@update');
+    $router->delete('/error-report/{id}', 'ErrorReportController@destroy');
+
+    $router->get('/troubleshoot', 'TroubleshootArticleController@index');
+    $router->get('/troubleshoot/{id}/category', 'TroubleshootArticleController@filterCategory');
+    $router->get('/troubleshoot/{id}', 'TroubleshootArticleController@view');
+    $router->post('/troubleshoot/save', 'TroubleshootArticleController@save');
+    $router->put('/troubleshoot/{id}/save', 'TroubleshootArticleController@save');
+    $router->post('/troubleshoot/publish', 'TroubleshootArticleController@publish');
+    $router->put('/troubleshoot/{id}/publish', 'TroubleshootArticleController@publish');
+
     $router->post('/search[/{query}]', 'SearchDataController@result');
 
     $router->get('/article/{id}/comments', 'CommentController@getArticleComments');
@@ -52,7 +66,11 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->delete('/comment/{id}', 'CommentController@destroy');
 
     $router->get('/user/activity/article', 'ActivityHistoryController@getArticleActivity');
+    $router->get('/user/activity/error-report', 'ActivityHistoryController@getErrorReportActivity');
     $router->get('/user/{id}/activity/article', 'ActivityHistoryController@getArticleActivity');
+    $router->get('/user/{id}/activity/error-report', 'ActivityHistoryController@getErrorReportActivity');
+
+    $router->get('/test/{id}', 'ThisControllerIsForTestingOnlyController@test');
 
     $router->post('/logout', 'Auth\AuthController@logout');
 });
