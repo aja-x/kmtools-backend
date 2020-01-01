@@ -19,5 +19,4 @@ class InterestCategory extends Model
     {
         return $this->hasMany('App\Article', 'id_interest_category');
     }
-
 }
