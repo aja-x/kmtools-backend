@@ -48,52 +48,60 @@ class ArticleController extends Controller
         return Response::view($user->UserKmAttribute->interestCategory->article()->paginate(6));
     }
 
-    public function save(Request $request, $id = null)
+    public function saveNewArticle(Request $request)
     {
         $this->validate($request, $this->rules);
-        if ($id === null) {
-            $article = Article::create([
-                'title' => $request->input('title'),
-                'content' => $request->input('content'),
-                'last_edited' => date('Y-m-d H:i:s'),
-                'id_interest_category' => $request->input('id_interest_category'),
-                'id_user' => Auth::id(),
-            ]);
-        } else {
-            $article = Article::findOrFail($id)->update([
-                'title' => $request->input('title'),
-                'content' => $request->input('content'),
-                'last_edited' => date('Y-m-d H:i:s'),
-                'id_interest_category' => $request->input('id_interest_category'),
-                'id_user' => Auth::id(),
-            ]);
-        }
+        $article = Article::create([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'last_edited' => date('Y-m-d H:i:s'),
+            'id_interest_category' => $request->input('id_interest_category'),
+            'id_user' => Auth::id(),
+        ]);
 
         return Response::success($article, 201);
     }
 
-    public function publish(Request $request, $id = null)
+    public function saveExistingArticle(Request $request, $id)
     {
         $this->validate($request, $this->rules);
-        if ($id === null) {
-            $article = Article::create([
-                'title' => $request->input('title'),
-                'content' => $request->input('content'),
-                'last_edited' => date('Y-m-d H:i:s'),
-                'published_date' => date('Y-m-d H:i:s'),
-                'id_interest_category' => $request->input('id_interest_category'),
-                'id_user' => Auth::id(),
-            ]);
-        } else {
-            $article = Article::findOrFail($id)->update([
-                'title' => $request->input('title'),
-                'content' => $request->input('content'),
-                'last_edited' => date('Y-m-d H:i:s'),
-                'published_date' => date('Y-m-d H:i:s'),
-                'id_interest_category' => $request->input('id_interest_category'),
-                'id_user' => Auth::id(),
-            ]);
-        }
+        $article = Article::findOrFail($id)->update([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'last_edited' => date('Y-m-d H:i:s'),
+            'id_interest_category' => $request->input('id_interest_category'),
+            'id_user' => Auth::id(),
+        ]);
+
+        return Response::success($article, 201);
+    }
+
+    public function publishNewArticle(Request $request)
+    {
+        $this->validate($request, $this->rules);
+        $article = Article::create([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'last_edited' => date('Y-m-d H:i:s'),
+            'published_date' => date('Y-m-d H:i:s'),
+            'id_interest_category' => $request->input('id_interest_category'),
+            'id_user' => Auth::id(),
+        ]);
+
+        return Response::success($article);
+    }
+
+    public function publishExistingArticle(Request $request, $id)
+    {
+        $this->validate($request, $this->rules);
+        $article = Article::findOrFail($id)->update([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'last_edited' => date('Y-m-d H:i:s'),
+            'published_date' => date('Y-m-d H:i:s'),
+            'id_interest_category' => $request->input('id_interest_category'),
+            'id_user' => Auth::id(),
+        ]);
 
         return Response::success($article);
     }
