@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\ErrorReport;
 use App\Services\Http\Response;
+use App\Test;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class SearchDataController extends Controller
 {
@@ -24,8 +27,10 @@ class SearchDataController extends Controller
 
         $resultArticle = Article::where('title', 'LIKE', "%{$request->input('query')}%")->get();
         $resultUser = User::where('name', 'LIKE', "%{$request->input('query')}%")->get();
+        $resultErrorReport = ErrorReport::where('title', 'LIKE', "%{$request->input('query')}%")->get();
 
         return Response::plain(['article' => ['count' => $resultArticle->count(), 'data' => $resultArticle],
-            'user' => ['count' => $resultUser->count(), 'data' => $resultUser], ]);
+            'user' => ['count' => $resultUser->count(), 'data' => $resultUser],
+            'error_report' => ['count' => $resultErrorReport->count(), 'data' => $resultErrorReport], ]);
     }
 }
