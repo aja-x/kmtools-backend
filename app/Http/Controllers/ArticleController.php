@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Article;
-use App\InterestCategory;
 use App\Services\ActivityService;
 use App\Services\Http\Response;
 use App\User;
