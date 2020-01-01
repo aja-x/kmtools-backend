@@ -15,5 +15,4 @@ class Image extends Model
         return $this->belongsToMany('App\Articles', 'article_images',
             'id_article', 'id_image')->as('articleImages')->withTimestamps();
     }
-
 }

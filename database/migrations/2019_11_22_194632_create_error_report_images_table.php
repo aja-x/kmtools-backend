@@ -22,7 +22,7 @@ class CreateErrorReportImagesTable extends Migration
             $table->foreign('id_image')->references('id')
                 ->on('images')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
-    });
+        });
     }
 
     /**

@@ -16,5 +16,4 @@ class ActivityService
 
         return ($article) ? true : false;
     }
-
 }
