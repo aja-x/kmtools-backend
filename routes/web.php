@@ -58,7 +58,7 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->post('/troubleshoot/publish', 'TroubleshootArticleController@publish');
     $router->put('/troubleshoot/{id}/publish', 'TroubleshootArticleController@publish');
 
-    $router->post('/search[/{query}]', 'SearchDataController@result');
+    $router->post('/search[/{query}]', 'ActivityHistoryController@searchResult');
 
     $router->get('/article/{id}/comments', 'CommentController@getArticleComments');
     $router->post('/comment', 'CommentController@store');
