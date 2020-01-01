@@ -65,22 +65,17 @@ class TroubleshootArticleController extends Controller
     public function save(Request $request, $id = null)
     {
         $this->validate($request, $this->rules);
+        $inputValue = [
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'last_edited' => date('Y-m-d H:i:s'),
+            'id_error_report' => $request->input('id_error_report'),
+            'id_user' => Auth::id(),
+        ];
         if ($id === null) {
-            $article = Article::create([
-                'title' => $request->input('title'),
-                'content' => $request->input('content'),
-                'last_edited' => date('Y-m-d H:i:s'),
-                'id_error_report' => $request->input('id_error_report'),
-                'id_user' => Auth::id(),
-            ]);
+            $article = Article::create($inputValue);
         } else {
-            $article = Article::findOrFail($id)->update([
-                'title' => $request->input('title'),
-                'content' => $request->input('content'),
-                'last_edited' => date('Y-m-d H:i:s'),
-                'id_error_report' => $request->input('id_error_report'),
-                'id_user' => Auth::id(),
-            ]);
+            $article = Article::findOrFail($id)->update($inputValue);
         }
 
         return Response::success($article, 201);
@@ -89,24 +84,18 @@ class TroubleshootArticleController extends Controller
     public function publish(Request $request, $id = null)
     {
         $this->validate($request, $this->rules);
+        $inputValue = [
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'last_edited' => date('Y-m-d H:i:s'),
+            'published_date' => date('Y-m-d H:i:s'),
+            'id_error_report' => $request->input('id_error_report'),
+            'id_user' => Auth::id(),
+        ];
         if ($id === null) {
-            $article = Article::create([
-                'title' => $request->input('title'),
-                'content' => $request->input('content'),
-                'last_edited' => date('Y-m-d H:i:s'),
-                'published_date' => date('Y-m-d H:i:s'),
-                'id_error_report' => $request->input('id_error_report'),
-                'id_user' => Auth::id(),
-            ]);
+            $article = Article::create($inputValue);
         } else {
-            $article = Article::findOrFail($id)->update([
-                'title' => $request->input('title'),
-                'content' => $request->input('content'),
-                'last_edited' => date('Y-m-d H:i:s'),
-                'published_date' => date('Y-m-d H:i:s'),
-                'id_error_report' => $request->input('id_error_report'),
-                'id_user' => Auth::id(),
-            ]);
+            $article = Article::findOrFail($id)->update($inputValue);
         }
 
         return Response::success($article);
