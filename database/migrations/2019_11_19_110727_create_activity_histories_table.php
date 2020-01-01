@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateActivityHistoriesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('activity_histories', function (Blueprint $table) {
@@ -29,11 +24,6 @@ class CreateActivityHistoriesTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('activity_histories');

@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateErrorReportsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('error_reports', function (Blueprint $table) {
@@ -28,11 +23,6 @@ class CreateErrorReportsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('error_reports');

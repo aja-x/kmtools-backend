@@ -5,11 +5,6 @@ use Illuminate\Database\Seeder;
 
 class TestCategoriesTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         TestCategory::create([

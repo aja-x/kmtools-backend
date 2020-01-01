@@ -56,4 +56,13 @@ class AuthController extends Controller
 
         return Response::plain(['message' => 'Logout success']);
     }
+
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => Auth::factory()->getTTL() * 60,
+        ], 200);
+    }
 }
